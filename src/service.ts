@@ -1,5 +1,4 @@
-import { DependencyA } from "./dependencyA";
-import { DependencyB } from "./dependencyB";
+import { DependencyA, DependencyB } from "./dependencies";
 
 export class ServiceA {
     protected depA: DependencyA;
