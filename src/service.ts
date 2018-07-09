@@ -1,13 +1,17 @@
-import { DependencyA, DependencyB } from "./dependencies";
+import { inject, injectable } from 'inversify';
+import { DependencyA, DependencyB } from './dependencies';
 
-export class ServiceA {
+@injectable()
+export class Service{
     protected depA: DependencyA;
     protected depB: DependencyB;
 
     constructor(
+        @inject(DependencyA) dependencyA: DependencyA,
+        @inject(DependencyB) dependencyB: DependencyB,
     ) {
-        this.depA = new DependencyA();
-        this.depB = new DependencyB();
+        this.depA = dependencyA;
+        this.depB = dependencyB;
     }
 
     public getAllNames(): string[] {

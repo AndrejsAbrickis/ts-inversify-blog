@@ -1,3 +1,7 @@
-import { ServiceA } from "./service";
+import 'reflect-metadata'
+import { Service } from './service';
+import DIContainer from './di-container';
 
-console.log(new ServiceA().getAllNames());
+const service: Service = DIContainer.resolve<Service>(Service);
+
+console.log(service.getAllNames());
