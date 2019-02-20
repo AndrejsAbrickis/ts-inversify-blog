@@ -95,7 +95,7 @@ After this we're no longer required to manually create `Service` class dependenc
 
 One of the more common uses for DI Containers is the ability to setup mocks in your test code. Maybe your service under test has a dependency on a module that performs HTTP request or do costly computation, so you need to instruct your test to use a double instead of the real service.
 
-The idea is to declare another `Container` instance to be used in your tests, and there setup it in such a way that, instead of using the real services, we use the mocks:
+The idea is to declare another `Container` instance to be used in your tests, and there setup it in such a way that, instead of using the real services, we use the mocks as implementations for `DependencyA` and `DependencyB`:
 
 ```typescript
 import { Container, injectable } from 'inversify';
@@ -154,7 +154,11 @@ describe('injecting dependencies with inversify', () => {
 });
 ```
 
-## Conslusion
+To execute the tests, run the npm script:
+
+`$ yarn test`
+
+## Conclusion
 Dependency injection is a pattern which removes the responsibility of manually creating class dependencies each time we want to use a particular class. Instead, we configure the Inversion of Control (IoC) container to do this for us. 
 
 The main benefits I see in this pattern is that we can mock and substitute the concrete instance of dependency. Thus we can make it easier to write tests for our class behavior without the need to manually create all the dependencies. And by utilizing interfaces and IoC container we can make our code to be more extensible.
