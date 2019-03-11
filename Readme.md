@@ -91,7 +91,74 @@ After this we're no longer required to manually create `Service` class dependenc
 
 ![](https://raw.githubusercontent.com/AndrejsAbrickis/ts-inversify/master/images/main-after-DI.png)
 
-## Conslusion
+### Using mock implementations in tests
+
+One of the more common uses for DI Containers is the ability to setup mocks in your test code. Maybe your service under test has a dependency on a module that performs HTTP request or do costly computation, so you need to instruct your test to use a double instead of the real service.
+
+The idea is to declare another `Container` instance to be used in your tests, and there setup it in such a way that, instead of using the real services, we use the mocks as implementations for `DependencyA` and `DependencyB`:
+
+```typescript
+import { Container, injectable } from 'inversify';
+import { DependencyA, DependencyB } from '../src/dependencies';
+import { Named } from '../src/types';
+
+/** 
+ * 
+ * Here there are two ways to instruct the DI container to resolve
+ * services:
+ * either you use a class that implements Named properly -MockA-, and then
+ * use the interface as the container identifier:
+ * DIContainer.bind<Named>(DependencyA).to(MockA);
+ * 
+ * or you provide a class that actually extends the desired class -DependencyB-, so you can
+ * just use the same class as the container identifier:
+ * DIContainer.bind<DependencyB>(DependencyB).to(MockB);
+ */
+
+@injectable()
+class MockA implements Named {
+  public getName(): string {
+      return 'dependencyA mocked for tests!';
+  }
+}
+
+@injectable()
+class MockB extends DependencyB {
+    public getName(): string {
+        return 'dependencyB mocked for tests!';
+    }
+}
+
+var DIContainer = new Container();
+DIContainer.bind<Named>(DependencyA).to(MockA);
+DIContainer.bind<DependencyB>(DependencyB).to(MockB);
+
+export default DIContainer;
+```
+
+Then, in the test code, we use the tests DIContainer to instantiate our `service` with the mocked dependencies, like:
+
+```typescript
+import 'reflect-metadata';
+import DIContainer from './di-container';
+import { Service } from '../src/service';
+
+const service: Service = DIContainer.resolve<Service>(Service);
+
+describe('injecting dependencies with inversify', () => {
+
+  it('getAllNames()', () => {
+    const names = service.getAllNames();
+    expect(names).toEqual(['dependencyA mocked for tests!', 'dependencyB mocked for tests!']);
+  })
+});
+```
+
+To execute the tests, run the npm script:
+
+`$ yarn test`
+
+## Conclusion
 Dependency injection is a pattern which removes the responsibility of manually creating class dependencies each time we want to use a particular class. Instead, we configure the Inversion of Control (IoC) container to do this for us. 
 
 The main benefits I see in this pattern is that we can mock and substitute the concrete instance of dependency. Thus we can make it easier to write tests for our class behavior without the need to manually create all the dependencies. And by utilizing interfaces and IoC container we can make our code to be more extensible.

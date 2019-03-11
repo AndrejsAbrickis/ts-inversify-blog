@@ -1,7 +1,7 @@
 import { injectable } from 'inversify';
-
+import {Named} from './types';
 @injectable()
-export class DependencyA {
+export class DependencyA implements Named {
     private readonly name: string = 'dependencyA';
 
     public getName(): string {
@@ -10,7 +10,7 @@ export class DependencyA {
 }
 
 @injectable()
-export class DependencyB {
+export class DependencyB implements Named {
     private readonly name: string = 'dependencyB';
 
     public getName(): string {
