@@ -7,10 +7,10 @@
   "license": "MIT",
   "devDependencies": {
     "@types/jest": "^24.0.6",
-    "inversify": "^4.13.0",
+    "inversify": "^5.0.1",
     "jest": "^24.1.0",
     "reflect-metadata": "^0.1.12",
-    "typescript": "^2.9.2"
+    "typescript": "^3.3.3333"
   },
   "scripts": {
     "build": "tsc",

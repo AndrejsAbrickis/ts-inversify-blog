@@ -1,5 +1,5 @@
-import { Container } from 'inversify';
-import { DependencyA, DependencyB } from './dependencies';
+import { Container } from "inversify";
+import { DependencyA, DependencyB } from "./dependencies";
 
 var DIContainer = new Container();
 DIContainer.bind<DependencyA>(DependencyA).toSelf();

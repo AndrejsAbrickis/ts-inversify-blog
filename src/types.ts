@@ -1,5 +1,5 @@
 interface Named {
-  getName() : string;
+  getName(): string;
 }
 
-export {Named};
+export { Named };

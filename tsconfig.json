@@ -1,12 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": [
-      "es2017",
-      "es2015",
-      "dom",
-      "es6"
-    ],
+    "lib": ["es2017", "es2015", "dom", "es6"],
     "module": "commonjs",
     "outDir": "./dist",
     "sourceMap": false,
@@ -16,11 +11,6 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
   },
-  "include": [
-    "./src/**/*.ts",
-    "./test/**/*.ts"
-  ],
-  "exclude": [
-    "node_modules",
-  ]
+  "include": ["./src/**/*.ts"],
+  "exclude": ["node_modules"]
 }
