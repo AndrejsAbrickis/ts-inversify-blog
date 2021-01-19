@@ -1,5 +1,5 @@
 import { Container, injectable } from 'inversify';
-import { DependencyA, DependencyB } from '../src/dependencies';
+import { DependencyA, DependencyB, DependencyC } from '../src/dependencies';
 import { Named } from '../src/types';
 
 /** 
@@ -31,8 +31,16 @@ class MockB extends DependencyB {
     }
 }
 
+@injectable()
+class MockC extends DependencyC {
+    public getName(): string {
+        return 'dependencyC mocked for tests!';
+    }
+}
+
 var DIContainer = new Container();
 DIContainer.bind<Named>(DependencyA).to(MockA);
 DIContainer.bind<DependencyB>(DependencyB).to(MockB);
+DIContainer.bind<DependencyC>(DependencyC).to(MockC);
 
 export default DIContainer;
